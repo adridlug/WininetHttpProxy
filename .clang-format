@@ -1,0 +1,16 @@
+---
+Language: C
+BasedOnStyle: LLVM
+IndentWidth: 4
+TabWidth: 4
+UseTab: ForIndentation
+BreakBeforeBraces: Allman
+AllowShortFunctionsOnASingleLine: None
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
+IndentCaseLabels: true
+PointerAlignment: Right
+SpaceBeforeParens: ControlStatements
+SpaceAfterCStyleCast: false
+ColumnLimit: 100
+...
