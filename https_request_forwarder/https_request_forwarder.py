@@ -8,7 +8,7 @@ def on_new_client(clientsocket,addr, logger):
     
     request = clientsocket.recv(40960)
 
-    if (b"studon".lower() not in request.lower()):
+    if (b"[INSERT HOST TO BE FILTERED HERE]".lower() not in request.lower()):
         clientsocket.close()
         return
     
