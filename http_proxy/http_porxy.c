@@ -74,47 +74,45 @@ void ParseRequest(char* request, char* method, char* host, char* port, char* pat
 	alloc_header_struct(&tmp_header, heap, procList);
 	*headers = tmp_header;
 
-	@@
--    /* Parse method: read until first space. */
--    while (*request != SPACE_CHAR) {
--        ++method_length;
--        ++request;
--    }
--
--    CustomMemcpy(method, request - method_length, method_length);
--
--    ++request; /* skip space */
--
--    /* Parse path: read until next space or end of string. */
--    while (*request != SPACE_CHAR && *request != '\0') {
--        ++path_length;
--        ++request;
--    }
--    
--    CustomMemcpy(path, request - path_length, path_length);
-+    /* Parse method: read until first space (bounded, null-terminated). */
-+    while (*request != SPACE_CHAR && *request != '\0' &&
-+           method_length < (METHOD_SIZE - 1)) {
-+        ++method_length;
-+        ++request;
-+    }
-+
-+    CustomMemcpy(method, request - method_length, method_length);
-+    method[method_length] = '\0';
-+
-+    if (*request == SPACE_CHAR) {
-+        ++request; /* skip space */
-+    }
-+
-+    /* Parse path: read until next space or end of string (bounded, null-terminated). */
-+    while (*request != SPACE_CHAR && *request != '\0' &&
-+           path_length < (BUFFER_SIZE - 1)) {
-+        ++path_length;
-+        ++request;
-+    }
-+
-+    CustomMemcpy(path, request - path_length, path_length);
-+    path[path_length] = '\0';
+
+    /* Parse method: read until first space. */
+    while (*request != SPACE_CHAR) {
+        ++method_length;
+        ++request;
+    }
+
+    CustomMemcpy(method, request - method_length, method_length);
+
+    ++request; /* skip space */
+
+    /* Parse path: read until next space or end of string. */
+    while (*request != SPACE_CHAR && *request != '\0') {
+        ++path_length;
+        ++request;
+    }
+    
+    CustomMemcpy(path, request - path_length, path_length);
+    /* Parse method: read until first space (bounded, null-terminated). */
+    while (*request != SPACE_CHAR && *request != '\0' &&
+           method_length < (METHOD_SIZE - 1)) {
+        ++method_length;
+        ++request;
+    }
+
+    CustomMemcpy(method, request - method_length, method_length);
+
+    if (*request == SPACE_CHAR) {
+        ++request; /* skip space */
+    }
+
+    /* Parse path: read until next space or end of string (bounded, null-terminated). */
+    while (*request != SPACE_CHAR && *request != '\0' &&
+           path_length < (BUFFER_SIZE - 1)) {
+        ++path_length;
+        ++request;
+    }
+
+    CustomMemcpy(path, request - path_length, path_length);
 
 	/* Scan forward for the "Host:" header line. */
 	while (*request != '\0') {
