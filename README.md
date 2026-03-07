@@ -206,3 +206,6 @@ Start the browser via with a configured http proxy with the address localhost:80
 - The path parsing loop stops at the first space but does not guard against a missing second space (e.g., a malformed request line).
 - No body (POST/PUT) forwarding – only the headers are forwarded upstream.
 ---
+
+### Disclaimer
+The information in this repository is for research and educational purposes and not meant to be used in production environments and/or as part of commercial products.
